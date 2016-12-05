@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html ng-app="myapp">
+<head>
+    <title>Notes application</title>
+    <script src="angular.js"></script>
+    <script src="notes.js"></script>
+    <style>
+        .note {
+            background-color:#EEE;
+            padding:5px;
+            width:80%;
+            border:1px solid black;
+            margin:10px;
+        }
+
+    </style>
+</head>
+<body ng-controller="NotesController">
+
+<label>Click<input type="checkbox" ng-model="checked"></label>
+
+<div ng-repeat="note in notes" ng-show="checked">
+    <p class="note">{{note.text}}</p>
+</div>
+
+</body>
+</html>
