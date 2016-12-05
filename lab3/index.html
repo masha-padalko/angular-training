@@ -20,7 +20,8 @@
 <label>Click<input type="checkbox" ng-model="checked"></label>
 
 <div ng-repeat="note in notes" ng-show="checked">
-    <p class="note">{{note.text}}</p>
+    <p class="note" ng-mouseenter="hover($event)">{{note.text}}</p>
+    <p>{{data}}</p>
 </div>
 
 </body>
