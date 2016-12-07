@@ -17,12 +17,14 @@
 </head>
 <body ng-controller="NotesController">
 
-<label>Click<input type="checkbox" ng-model="checked"></label>
-
-<div ng-repeat="note in notes" ng-show="checked">
-    <p class="note" ng-mouseenter="hover($event)">{{note.text}}</p>
-    <p>{{data}}</p>
-    <button ng-click="remove(note.id)">Remove note</button>
+    <select ng-model="order">
+        <option value="text">Sort alphabetically</option>
+        <option value="date">Sort by date</option>
+    </select>
+<div ng-repeat="note in notes | orderBy:'date'">
+    <p class="note">{{note.text}}</p>
+    <p>{{note.date | date: 'HH:mm:ss dd.MM.yyyy'}}</p>
+    <button ng-click="remove(note._id)">Remove</button>
 </div>
 
 Add note:<br>

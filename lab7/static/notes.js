@@ -2,8 +2,8 @@ angular.module('myapp', []);
 
 angular.module('myapp').controller('NotesController',
     function($scope, $http) {
-        $scope.checked=false;
         $scope.data='';
+        $scope.date =  new Date();
         $scope.notes = [];
         $scope.hover = function($event){
             $scope.data=$event.clientX;
@@ -19,7 +19,8 @@ angular.module('myapp').controller('NotesController',
         update();
 
         $scope.add = function() {
-            var note = {text: $scope.text};
+            var note = {text: $scope.text, date: new Date()};
+
             $http.post("/notes", note)
                 .success(function() {
                     $scope.text = "";
@@ -27,12 +28,20 @@ angular.module('myapp').controller('NotesController',
                 });
 
         };
+        $scope.remove = function(id) {
+            $http.delete("/notes",{params:{id:id}})
+                .success(function(res) {
+                    update();
+                });
+        }
 
-        $scope.remove = function(id)
-        {
-            $http.delete("/notes", {params: {id:id}});
-            update();
-        };
+        // $scope.totop = function(id) {
+        //     $http.delete("/totop",{params:{id:id}})
+        //         .success(function(res) {
+        //             update();
+        //         });
+        // }
+
 
     });
 
