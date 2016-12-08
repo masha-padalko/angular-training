@@ -21,8 +21,10 @@
         <div class="panel panel-default">
             <div class="panel-heading">Notes</div>
 
-            <ul class="list-group" ng-repeat="note in notes">
-                <li class="list-group-item">{{note.text}}<br><{{note.date}}></li>
+            <ul class="list-group">
+                <li ng-repeat="note in notes" class="list-group-item">{{note.text}}<br><{{note.date}}>
+                <p><button ng-click="remove(note._id)" class="btn btn-default">Remove</button></p>
+                </li>
             </ul>
         </div>
 
