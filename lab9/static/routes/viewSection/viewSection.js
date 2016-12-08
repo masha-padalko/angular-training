@@ -1,4 +1,4 @@
-module.controller("ViewSectionController",
+angular.module('myapp').controller("ViewSectionController",
     function($scope, $http, $routeParams) {
         $scope.section = $routeParams.name;
         var params = {params: {section:$routeParams.name}};

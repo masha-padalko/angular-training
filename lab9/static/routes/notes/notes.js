@@ -1,13 +1,8 @@
-// angular.module('myapp', ['dndLists']);
-
 angular.module('myapp').controller('NotesController',
     function($scope, $http) {
         $scope.data='';
         $scope.date =  new Date();
         $scope.notes = [];
-        $scope.hover = function($event){
-            $scope.data=$event.clientX;
-        }
 
         var update = function() {
             var params = {params:{section:$scope.activeSection}};

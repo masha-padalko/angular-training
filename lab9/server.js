@@ -37,7 +37,7 @@ app.get("/notes", function(req,res)
 {
 
     db.notes.find(req.query).toArray(function(err, items) {
-        console.log(JSON.stringify(items));
+
         res.send(items);
     });
 });
@@ -61,7 +61,7 @@ app.post("/sections/replace", function(req,resp) {
         resp.end();
     }
     db.sections.remove({}, function(err, res) {
-        if (err) console.log(err);
+
         db.sections.insert(req.body, function(err, res) {
             if (err) console.log("err after insert",err);
             resp.end();
