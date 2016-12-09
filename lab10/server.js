@@ -14,9 +14,13 @@ db.open(function(){
     db.collection('notes', function(error, notes) {
         db.notes = notes;
     });
+    db.collection('users', function(error, users) {
+        db.users = users;
+    });
     db.collection('sections', function(error, sections) {
         db.sections = sections;
     });
+
 });
 
 app.use(express.static('static'));
@@ -51,11 +55,28 @@ app.delete("/notes", function(req,res) {
     })
 });
 
-
 app.post("/notes", function(req, res)
 {
     db.notes.insert(req.body);
     res.end();
+});
+
+//Users
+app.get("/checkUser", function(req,res) {
+    // res.send(req.query.user.length>2);
+
+    db.users.find({userName: req.query.user}).toArray(function(err, items) {
+
+        res.send(!(req.query.user.length > 2 && items.length>0));
+    });
+});
+
+// possibility to post user to users collection
+app.post("/users", function(req,res) {
+    db.users.insert(req.body, function(resp) {
+        req.session.userName = req.body.userName;
+        res.end();
+    });
 });
 
 //SECTIONS
@@ -79,6 +100,7 @@ app.post("/sections/replace", function(req,resp) {
         });
     });
 });
+
 
 
 app.listen(3000);

@@ -1,26 +1,37 @@
 angular.module('myapp').controller('NotesController',
-    function($scope, $http) {
+    function($scope, $http, Note) {
         $scope.data='';
         $scope.date =  new Date();
         $scope.notes = [];
 
+
         var update = function() {
-            var params = {params:{section:$scope.activeSection}};
-            $http.get("/notes", params)
-                .success(function(notes) {
-                    $scope.notes = notes;
-                });
+            $scope.notes = Note.query(
+                {section:$scope.activeSection});
         };
         update();
 
+
+
+        // $scope.add = function() {
+        //     var note = {text: $scope.text, date: new Date(), section:$scope.activeSection};
+        //     if (!$scope.text || $scope.text.length==0) return;
+        //     $http.post("/notes", note)
+        //         .success(function() {
+        //             $scope.text = "";
+        //             update();
+        //         });
+        // };
+
         $scope.add = function() {
-            var note = {text: $scope.text, date: new Date(), section:$scope.activeSection};
-            if (!$scope.text || $scope.text.length==0) return;
-            $http.post("/notes", note)
-                .success(function() {
-                    $scope.text = "";
-                    update();
-                });
+            if ($scope.text.length==0) return;
+            var note = new Note();
+            note.text = $scope.text;
+            note.section = $scope.activeSection;
+            note.$save(function() {
+                $scope.text = "";
+                update();
+            });
         };
 
         $scope.remove = function(id) {
@@ -72,3 +83,6 @@ angular.module('myapp').controller('NotesController',
         }
     });
 
+module.factory('Note', function($resource) {
+    return $resource('/notes');
+})
